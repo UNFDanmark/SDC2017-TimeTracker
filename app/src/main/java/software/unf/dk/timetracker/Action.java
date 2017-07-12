@@ -1,7 +1,5 @@
 package software.unf.dk.timetracker;
 
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.util.Log;
 
 import java.text.DateFormat;
@@ -59,9 +57,6 @@ class Action {
     public Date getDate() {
         return date;
     }
-    public void setDate(Date date) {
-        this.date = date;
-    }
     static String dateToString(Date date) {
         return DATETIME_FORMAT.format(date);
     }
@@ -89,14 +84,14 @@ class Action {
         }
         return names;
     }
-    static ArrayList<String> getNames(String classification) {
+    /*static ArrayList<String> getNames(String classification) {
         ArrayList<String> names = new ArrayList<>();
         for (Action a : actionList) {
             if (!names.contains(a.getName()) && a.getClassification().getName().equals(classification))
                 names.add(a.getName());
         }
         return names;
-    }
+    }*/
     static int getAmount(String name) {
         int i = 0;
         for (Action a : actionList) {

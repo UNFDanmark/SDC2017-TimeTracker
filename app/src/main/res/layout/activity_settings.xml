@@ -3,16 +3,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/settings_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/blue"
+        android:elevation="5dp"
+        android:theme="?attr/actionBarTheme" />
+
     <ToggleButton
         android:id="@+id/toggleButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/adder"
         android:layout_alignStart="@+id/adder"
-        android:layout_below="@+id/bremove"
+        android:layout_below="@+id/removeButton"
         android:layout_marginTop="22dp"
-        android:checked="true"
-        android:text="ToggleButton" />
+        android:checked="true" />
 
     <Button
         android:id="@+id/adder"
@@ -21,7 +28,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         android:onClick="adding"
-        android:text="ADD"
+        android:text="@string/add"
         android:layout_alignTop="@+id/classificationText"
         android:layout_toRightOf="@+id/classificationText"
         android:layout_toEndOf="@+id/classificationText" />
@@ -32,44 +39,34 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:layout_below="@+id/textView"
-        android:layout_alignLeft="@+id/textView"
-        android:layout_alignStart="@+id/textView"
-        android:layout_marginTop="34dp" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_marginTop="29dp"
+        android:layout_below="@+id/settings_toolbar"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="12dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="13dp"
-        android:text="Custom Settings" />
+        android:layout_marginLeft="11dp"
+        android:layout_marginStart="11dp" />
 
     <Button
-        android:id="@+id/brename"
+        android:id="@+id/renameButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="rename"
-        android:text="Rename"
+        android:layout_alignLeft="@+id/chooseCategoryText"
+        android:layout_alignStart="@+id/chooseCategoryText"
         android:layout_below="@+id/spinner"
-        android:layout_alignLeft="@+id/texktview5"
-        android:layout_alignStart="@+id/texktview5"
-        android:layout_marginTop="23dp" />
+        android:layout_marginTop="23dp"
+        android:onClick="rename"
+        android:text="@string/rename" />
 
     <Button
-        android:id="@+id/bremove"
+        android:id="@+id/removeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/renameButton"
+        android:layout_alignBottom="@+id/renameButton"
+        android:layout_toEndOf="@+id/chooseCategoryText"
+        android:layout_toRightOf="@+id/chooseCategoryText"
         android:onClick="remove"
-        android:text="Remove"
-        android:layout_alignBaseline="@+id/brename"
-        android:layout_alignBottom="@+id/brename"
-        android:layout_toRightOf="@+id/textView"
-        android:layout_toEndOf="@+id/textView" />
+        android:text="@string/remove" />
 
     <Spinner
         android:id="@+id/spinner"
@@ -87,24 +84,24 @@
         android:layout_above="@+id/adder"
         android:layout_alignLeft="@+id/classificationText"
         android:layout_alignStart="@+id/classificationText"
-        android:text="Add a Catagory" />
+        android:text="@string/create_category" />
 
     <TextView
-        android:id="@+id/texktview5"
+        android:id="@+id/chooseCategoryText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/classificationText"
         android:layout_alignStart="@+id/classificationText"
         android:layout_below="@+id/adder"
         android:layout_marginTop="11dp"
-        android:text="Select category" />
+        android:text="@string/choose_category" />
 
     <EditText
-        android:id="@+id/notificationtimetext"
+        android:id="@+id/notificationTimeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/brename"
-        android:layout_alignStart="@+id/brename"
+        android:layout_alignLeft="@+id/renameButton"
+        android:layout_alignStart="@+id/renameButton"
         android:layout_below="@+id/toggleButton"
         android:layout_marginTop="12dp"
         android:ems="10"
@@ -115,9 +112,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Minutes to next notification"
-        android:layout_above="@+id/notificationtimetext"
-        android:layout_alignLeft="@+id/notificationtimetext"
-        android:layout_alignStart="@+id/notificationtimetext" />
+        android:layout_above="@+id/notificationTimeText"
+        android:layout_alignLeft="@+id/notificationTimeText"
+        android:layout_alignStart="@+id/notificationTimeText" />
 
     <TextView
         android:id="@+id/Notification"
@@ -125,8 +122,8 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/toggleButton"
         android:layout_alignStart="@+id/toggleButton"
-        android:layout_below="@+id/bremove"
-        android:text="Notif On/Off" />
+        android:layout_below="@+id/removeButton"
+        android:text="Notifications On/Off" />
 
     <Button
         android:id="@+id/button5"
@@ -134,7 +131,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/toggleButton"
         android:layout_alignStart="@+id/toggleButton"
-        android:layout_alignTop="@+id/notificationtimetext"
+        android:layout_alignTop="@+id/notificationTimeText"
         android:onClick="updateNotificationTime"
         android:text="Enter" />
 

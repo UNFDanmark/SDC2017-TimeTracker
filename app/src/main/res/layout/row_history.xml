@@ -12,7 +12,6 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="15dp"
-        android:text="00:00"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <LinearLayout
@@ -28,7 +27,6 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
-            android:text="Name goes here"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -40,7 +38,6 @@
             android:layout_marginBottom="5dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:text="Classification goes here"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
         <TextView
@@ -49,7 +46,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:text="Date goes here"
             android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
     </LinearLayout>
 </LinearLayout>

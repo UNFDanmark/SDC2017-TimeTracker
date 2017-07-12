@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -14,11 +13,10 @@ import android.widget.TextView;
 
 import java.util.Date;
 
-public class ActionViewerActivity extends Activity {
+public class ActionViewerActivity extends AppCompatActivity {
     public static final String ACTION_NAME_EXTRA = "ACTION_NAME";
     public static final String ACTION_CLASS_NAME_EXTRA = "ACTION_CLASS_NAME";
     public static final String ACTION_DATE_EXTRA = "ACTION_DATE";
-    public static final String LIST_POSITION_EXTRA = "LIST_POSITION";
     public static final int ACTION_VIEW_REQUEST = 1;
 
     private TextView actionText;
@@ -37,9 +35,9 @@ public class ActionViewerActivity extends Activity {
     }
 
     void layoutSetup() {
-        actionText = findViewById(R.id.actionText);
-        classificationSpinner = findViewById(R.id.classificationSpinner);
-        TextView timeText = findViewById(R.id.timeText);
+        actionText = (TextView) findViewById(R.id.actionText);
+        classificationSpinner = (Spinner) findViewById(R.id.classificationSpinner);
+        TextView timeText = (TextView) findViewById(R.id.timeText);
 
         Intent intent = getIntent();
         String name = intent.getStringExtra(ACTION_NAME_EXTRA);
@@ -79,7 +77,7 @@ public class ActionViewerActivity extends Activity {
         });
     }
 
-    void accept() {
+    /*void accept() {
         Intent intent = new Intent();
         intent.putExtra(ACTION_NAME_EXTRA, actionText.getText().toString());
         intent.putExtra(ACTION_CLASS_NAME_EXTRA, classificationString);
@@ -89,5 +87,5 @@ public class ActionViewerActivity extends Activity {
 
     void cancel() {
         finish();
-    }
+    }*/
 }

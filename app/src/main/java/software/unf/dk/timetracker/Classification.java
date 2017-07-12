@@ -1,36 +1,26 @@
 package software.unf.dk.timetracker;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 class Classification {
-    // Static.
-    public static ConcurrentHashMap<Integer, Classification> classificationMap = new ConcurrentHashMap<>();
+    // Map of known classifications. TODO: move to separate ClassificationMap class
+    static ConcurrentHashMap<Integer, Classification> classificationMap = new ConcurrentHashMap<>();
 
     // Non-statics.
     private String name;
     private int id;
     private boolean visible = true;
 
-    // Instantiate method. Called when reading file.
     public Classification(String name, int id, boolean visible) {
         this.name = name;
         this.id = id;
         this.visible = visible;
-        if(name.equals("the"))
-            Log.e("Test", this + "");
     }
 
-    // Name.
     public String getName() {
         return name;
     }
@@ -38,10 +28,10 @@ class Classification {
         this.name = name;
     }
 
-    public boolean isVisible() {
+    boolean isVisible() {
         return visible;
     }
-    public void setVisible(boolean visible) {
+    void setVisible(boolean visible) {
         this.visible = visible;
     }
 
@@ -51,7 +41,9 @@ class Classification {
 
     static boolean createNew(String name) {
         if (Classification.nameExists(name)) {
-            getClassificationByName(name).setVisible(true);
+            // Classification exists, set as visible
+            Classification c;
+            if ((c = getClassificationByName(name)) != null) c.setVisible(true);
             return false;
         }
         int id = Classification.getUniqueId();
@@ -59,10 +51,8 @@ class Classification {
             Log.e("Classification", "Failed to make new category");
             return false;
         }
-        Log.e("Test", "Creating class "+name+" with id "+id);
         Classification c = new Classification(name, id, true);
         Classification.classificationMap.put(id, c);
-        Log.e("Test", "Address is " + classificationMap.get(id));
         return true;
     }
     static int getUniqueId() {
@@ -82,17 +72,6 @@ class Classification {
             }
         }
         return null;
-    }
-
-    public static int getIdByName(String name){
-        for (Map.Entry<Integer, Classification> e: classificationMap.entrySet()) {
-            Log.e("Test getId", "name: "+name+" entry name "+ e.getValue().getName() + " entry id " + e.getValue().getId());
-            if(e.getValue().getName().equals(name)) {
-                Log.e("Test", e.getValue() +"");
-                return e.getValue().getId();
-            }
-        }
-        return -1;
     }
 
     private static boolean nameExists(String name) {

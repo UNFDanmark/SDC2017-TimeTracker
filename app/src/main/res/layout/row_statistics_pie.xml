@@ -7,17 +7,12 @@
         android:id="@+id/nameOfPieChart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Category name"
         android:textAlignment="center"
         android:textSize="24sp" />
 
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/chart"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true" />
+        android:layout_height="300dp" />
 
 </LinearLayout>

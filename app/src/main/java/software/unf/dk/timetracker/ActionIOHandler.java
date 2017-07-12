@@ -34,11 +34,11 @@ import javax.xml.transform.stream.StreamResult;
 
 class ActionIOHandler extends IOHandler {
 
-    private final String DOCUMENT_HEADER = "<?xml version=\"1.0\"?>\n<actions>\n</actions>";
 
     // Instantiates, anc create a fil.
     public ActionIOHandler(File file) {
         super(file);
+        final String DOCUMENT_HEADER = "<?xml version=\"1.0\"?>\n<actions>\n</actions>";
         try {
             // Create file if it doesn't exist
             if (file.createNewFile() || file.length() == 0) {
@@ -49,9 +49,6 @@ class ActionIOHandler extends IOHandler {
             // Initialise parser objects
             factory = DocumentBuilderFactory.newInstance();
             builder = factory.newDocumentBuilder();
-            // Create test string
-            ByteArrayInputStream input = new ByteArrayInputStream(DOCUMENT_HEADER.getBytes("UTF-8"));
-
             // Parse file
             document = builder.parse(file);
             // document = builder.parse(file);

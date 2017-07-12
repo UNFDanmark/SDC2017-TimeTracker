@@ -1,12 +1,14 @@
 package software.unf.dk.timetracker;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,14 +27,20 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+/**
+ * Determines what kind of time range should be displayed
+ */
 enum WhatToShow {ALL, DAY, WEEK, MONTH, YEAR}
-public class HistoryActivity extends Activity{
+
+/**
+ * A list-based view of the activities the user has logged
+ */
+public class HistoryActivity extends AppCompatActivity {
+
     private String[] classificationSpinnerStrings;
+    // Currently selected string in spinner
     private String classificationString;
 
-    /**
-     * UI
-     */
     // List.
     private ListView actionListView;
 
@@ -65,9 +73,19 @@ public class HistoryActivity extends Activity{
     }*/
 
     private void layoutSetup() {
+        // Toolbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.history_toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar ab = getSupportActionBar();
+        // Enable back button
+        if (ab != null) {
+            ab.setDisplayHomeAsUpEnabled(true);
+        } else {
+            Log.w("timetracker", "Warning: Failed to get action bar!");
+        }
+
         setReferences();
-        Date date = new Date(); // Gets right now
-        currShownDate = dateFormat.format(date);
+        currShownDate = dateFormat.format(new Date());
 
         updateView();
     }
@@ -125,6 +143,7 @@ public class HistoryActivity extends Activity{
                         action.setName(actionText.getText().toString());
                         action.setClassification(Classification.getClassificationByName(classificationString));
                         action.setDescription(descriptionText.getText().toString());
+                        updateView();
                     }
                 });
                 builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
@@ -144,22 +163,17 @@ public class HistoryActivity extends Activity{
 
                 builder.show();
 
-                /*Intent intent = new Intent(HistoryActivity.this, ActionViewerActivity.class);
-                intent.putExtra(ActionViewerActivity.ACTION_NAME_EXTRA, action.getName());
-                intent.putExtra(ActionViewerActivity.ACTION_CLASS_NAME_EXTRA, action.getClassification().getName());
-                intent.putExtra(ActionViewerActivity.ACTION_DATE_EXTRA, action.getDate().getTime());
-                intent.putExtra(ActionViewerActivity.LIST_POSITION_EXTRA)
-                startActivityForResult(intent, ActionViewerActivity.ACTION_VIEW_REQUEST);*/
+                // TODO: discuss if Actions should be edited in a separate Activity, and how to implement that
             }
         });
     }
 
     private void setReferences(){
         // List.
-        actionListView = findViewById(R.id.actionList);
+        actionListView = (ListView) findViewById(R.id.actionList);
 
         // Text view.
-        showDate = findViewById(R.id.showDate);
+        showDate = (TextView) findViewById(R.id.showDate);
     }
 
     private Action[] setValues(WhatToShow whatToShow, String date){
@@ -342,7 +356,7 @@ class ActionArrayAdapter extends ArrayAdapter<Action> {
         Action a = values[position];
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        convertView = inflater.inflate(R.layout.history_action_row, parent, false);
+        convertView = inflater.inflate(R.layout.row_history, parent, false);
         TextView nameText = convertView.findViewById(R.id.nameText);
         TextView timeText = convertView.findViewById(R.id.timeText);
         TextView dateText = convertView.findViewById(R.id.dateText);

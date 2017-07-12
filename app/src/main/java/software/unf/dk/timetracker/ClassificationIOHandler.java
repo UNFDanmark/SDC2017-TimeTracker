@@ -32,15 +32,15 @@ import javax.xml.transform.stream.StreamResult;
  */
 
 class ClassificationIOHandler extends IOHandler {
-    private final String DOCUMENT_HEADER = "<?xml version=\"1.0\"?>\n<classifications>\n" +
-            "<classification name=\"Entertainment\" id=\"0\" visible=\"true\"/>" +
-            "<classification name=\"Education\" id=\"1\" visible=\"true\"/>" +
-            "<classification name=\"Sport\" id=\"2\" visible=\"true\"/>" +
-            "<classification name=\"Friends\" id=\"3\" visible=\"true\"/>" +
-            "<classification name=\"Work\" id=\"4\" visible=\"true\"/>" +
-            "\n</classifications>";
-    public ClassificationIOHandler(File file) {
+    ClassificationIOHandler(File file) {
         super(file);
+        final String DOCUMENT_HEADER = "<?xml version=\"1.0\"?>\n<classifications>\n" +
+                "<classification name=\"Entertainment\" id=\"0\" visible=\"true\"/>" +
+                "<classification name=\"Education\" id=\"1\" visible=\"true\"/>" +
+                "<classification name=\"Sport\" id=\"2\" visible=\"true\"/>" +
+                "<classification name=\"Friends\" id=\"3\" visible=\"true\"/>" +
+                "<classification name=\"Work\" id=\"4\" visible=\"true\"/>" +
+                "\n</classifications>";
         try {
             // Create file if it doesn't exist
             if (file.createNewFile() || file.length() == 0) {
@@ -51,9 +51,6 @@ class ClassificationIOHandler extends IOHandler {
             // Initialise parser objects
             factory = DocumentBuilderFactory.newInstance();
             builder = factory.newDocumentBuilder();
-            // Create test string
-            ByteArrayInputStream input = new ByteArrayInputStream(DOCUMENT_HEADER.getBytes("UTF-8"));
-
             // Parse file
             document = builder.parse(file);
             // document = builder.parse(file);
@@ -103,11 +100,7 @@ class ClassificationIOHandler extends IOHandler {
                     id = Classification.getUniqueId();
                 }
                 boolean visible;
-                if (actionElement.getAttribute("visible").equals("true")) {
-                    visible = true;
-                } else {
-                    visible = false;
-                }
+                visible = actionElement.getAttribute("visible").equals("true");
 
                 classifications.add(new Classification(name, id, visible));
             }

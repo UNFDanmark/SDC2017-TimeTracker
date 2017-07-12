@@ -9,12 +9,15 @@ import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -23,31 +26,20 @@ import java.io.File;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
-
-    /** Varibles**/
-    // files
+    // datafile names
     private final String ACTIONS_FILENAME = "actions.xml";
     private final String CLASSIFICATIONS_FILENAME = "classifications.xml";
 
+    private static Integer notificationTime = 45; // Time in minutes until next notification.
+    private static Boolean wantNotification = true; // If the user has enabled notifications
 
+    private AutoCompleteTextView actionText;
 
-    //Integers
-    private static Integer notificationTime =45;
-    // Input text boxes
-    private AutoCompleteTextView answer;
     private EditText classificationText;
-    // Spinner
-    private Spinner spinner;
-    // Buttons
-    private Button enter;
-    private Button addClassificationB;
-    // Strings
+    private Spinner classificationSpinner;
+    private String[] classificationSpinnerStrings;
     private String classificationString;
-    // String Array
-    private String[] spinnerStrings;
-    private String[] actionNames;
-    //Boolean
-    private static Boolean wantNotification = true;
+
 
     public static void setWantNotification(Boolean wantNotification) {
         MainActivity.wantNotification = wantNotification;
@@ -66,14 +58,42 @@ public class MainActivity extends AppCompatActivity {
         layoutSetup();
     }
 
+    // Load the action bar menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_toolbar, menu);
+        return true;
+    }
+
+    // Handle actions
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_history:
+                historyActivity(null);
+                return true;
+            case R.id.action_settings:
+                settingsActivity(null);
+                return true;
+            case R.id.action_statistics:
+                statisticsActivity(null);
+                return true;
+            default:
+                // Unrecognized action, make superclass handle it
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     // Used for testing ONLY!
-    private void test(){
+    /*private void test(){
+        // Delete data files
         File file = new File(getFilesDir(), CLASSIFICATIONS_FILENAME);
         file.delete();
 
         file = new File(getFilesDir(), ACTIONS_FILENAME);
         file.delete();
-    }
+    }*/
 
     protected void onResume(){
         super.onResume();
@@ -84,33 +104,36 @@ public class MainActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         saveData();
-        if(wantNotification){
+        if (wantNotification) {
             new CountDownTimer(notificationTime *60*1000,1000){
-
                 public void onTick(long millisUntilFinished) {}
-
                 public void onFinish() {
                     createNotification();
                 }
-
             }.start();
         }
-
     }
 
     /**
      * Read Classification and Action data from XML files
      */
     private void loadData() {
+        // Open classifications file and read data
         ClassificationIOHandler classificationIOHandler = new ClassificationIOHandler(new File(getFilesDir(), CLASSIFICATIONS_FILENAME));
         Classification.classificationMap = Classification.listToMap(classificationIOHandler.parseClassifications());
+        // Open actions file and read data
         ActionIOHandler actionIOHandler = new ActionIOHandler(new File(getFilesDir(), ACTIONS_FILENAME));
         Action.actionList = actionIOHandler.parseActions();
     }
 
+    /**
+     * Write Classification and Action data to XML files
+     */
     private void saveData() {
+        // Open classifications file and write data
         ClassificationIOHandler classificationIOHandler = new ClassificationIOHandler(new File(getFilesDir(), CLASSIFICATIONS_FILENAME));
         classificationIOHandler.writeClassifications(Classification.mapToList(Classification.classificationMap));
+        // Open actions file and write data
         ActionIOHandler actionIOHandler = new ActionIOHandler(new File(getFilesDir(), ACTIONS_FILENAME));
         actionIOHandler.writeActions(Action.actionList);
     }
@@ -119,10 +142,13 @@ public class MainActivity extends AppCompatActivity {
      * Assign layout variables and initialize elements
      */
     private void layoutSetup() {
+        // Toolbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         // Actions.
-        answer = (AutoCompleteTextView) findViewById(R.id.svar);
+        actionText = (AutoCompleteTextView) findViewById(R.id.actionText);
         // Dropdown.
-        spinner = (Spinner)findViewById(R.id.spinner);
+        classificationSpinner = (Spinner)findViewById(R.id.spinner);
         classificationText = (EditText) findViewById(R.id.classificationText);
 
         setCompletion();
@@ -130,26 +156,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void setCompletion() {
-        actionNames = Action.getNames().toArray(new String[0]);
+        String[] actionNames = Action.getNames().toArray(new String[0]);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, actionNames);
-        answer.setAdapter(adapter);
+        actionText.setAdapter(adapter);
     }
 
     private void setSpinner(){
-        spinnerStrings = Classification.mapToStringList(Classification.classificationMap).toArray(new String[0]);
+        classificationSpinnerStrings = Classification.mapToStringList(Classification.classificationMap).toArray(new String[0]);
 
         // Doing so the Array can be put into the Spinner
         final ArrayAdapter<String> adapter = new ArrayAdapter<>(MainActivity.this,
-                android.R.layout.simple_spinner_item, spinnerStrings);
+                android.R.layout.simple_spinner_item, classificationSpinnerStrings);
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
+        classificationSpinner.setAdapter(adapter);
         // Listen to things happens on the Spinner
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        classificationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                // Set string to selected spinner value
-                classificationString = spinnerStrings[i];
+                // Set string to selected classificationSpinner value
+                classificationString = classificationSpinnerStrings[i];
             }
 
             @Override
@@ -165,12 +191,12 @@ public class MainActivity extends AppCompatActivity {
     // Runs when Enter is pressed
     public void enter(View view){
         // Creates new instance of an action and adds it to the list of actions.
-        String name = answer.getText().toString();
+        String name = actionText.getText().toString();
         if (name.equals("")) {
             showToast("Name can't be empty!");
             return;
         }
-        answer.setText("");
+        actionText.setText("");
         setCompletion();
         Classification classification = Classification.getClassificationByName(classificationString);
         Log.e("Test", classification + "");
@@ -210,7 +236,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void settingsActivity(View view){
-        Intent hissettingpath = new Intent(this, CustomSettings.class);
+        Intent hissettingpath = new Intent(this, SettingsActivity.class);
         startActivity(hissettingpath);
     }
 

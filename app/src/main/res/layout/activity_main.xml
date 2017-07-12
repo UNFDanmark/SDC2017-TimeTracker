@@ -1,190 +1,189 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="software.unf.dk.timetracker.MainActivity"
-    tools:layout_editor_absoluteY="81dp"
-    tools:layout_editor_absoluteX="0dp">
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="81dp">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/blue"
+        android:elevation="5dp"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/Base.TextAppearance.AppCompat.Title.Inverse" />
 
     <Spinner
         android:id="@+id/spinner"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_column="0"
-        android:layout_row="2"
+        android:layout_marginTop="12dp"
         tools:layout_editor_absoluteX="20dp"
         tools:layout_editor_absoluteY="130dp"
-        android:layout_below="@+id/textView5"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="11dp" />
+        android:layout_below="@+id/chooseCategoryText"
+        android:layout_alignLeft="@+id/chooseCategoryText"
+        android:layout_alignStart="@+id/chooseCategoryText" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/history_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:onClick="historyActivity"
-        android:text="History"
+        android:text="@string/history_activity_name"
         tools:layout_editor_absoluteX="264dp"
         tools:layout_editor_absoluteY="447dp" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/statistics_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:onClick="statisticsActivity"
-        android:text="Statistics"
+        android:text="@string/statistics_activity_name"
         tools:layout_editor_absoluteX="136dp"
         tools:layout_editor_absoluteY="447dp" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/chooseCategoryText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/buttonSetter"
-        android:layout_column="0"
-        android:layout_row="15"
-        android:text=" Choose category"
+        android:text="@string/choose_category"
         tools:layout_editor_absoluteX="20dp"
-        tools:layout_editor_absoluteY="114dp" />
+        tools:layout_editor_absoluteY="114dp"
+        android:layout_below="@+id/buttonSetter"
+        android:layout_alignLeft="@+id/questionText"
+        android:layout_alignStart="@+id/questionText" />
 
     <EditText
         android:id="@+id/classificationText"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView6"
-        android:layout_column="0"
-        android:layout_row="3"
         android:ems="10"
         android:inputType="textPersonName"
-        android:singleLine="false"
         tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="269dp" />
+        tools:layout_editor_absoluteY="269dp"
+        android:layout_below="@+id/nameOfCategoryText"
+        android:layout_alignLeft="@+id/nameOfCategoryText"
+        android:layout_alignStart="@+id/nameOfCategoryText" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/nameOfCategoryText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/button2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_column="0"
-        android:layout_row="3"
-        android:text=" Name of category"
+        android:text="@string/category_name"
         tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="247dp" />
+        tools:layout_editor_absoluteY="247dp"
+        android:layout_above="@+id/addCategoryButton"
+        android:layout_alignLeft="@+id/createNewCategoryText"
+        android:layout_alignStart="@+id/createNewCategoryText" />
 
     <Button
         android:id="@+id/buttonSetter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_column="1"
-        android:layout_row="3"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/actionText"
         android:onClick="enter"
         android:text="Enter"
         tools:layout_editor_absoluteX="277dp"
-        tools:layout_editor_absoluteY="50dp"
-        android:layout_alignTop="@+id/svar"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        tools:layout_editor_absoluteY="50dp" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/createNewCategoryText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/textView6"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:text="Create new category"
+        android:text="@string/create_category"
         android:textSize="18sp"
         tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="225dp" />
+        tools:layout_editor_absoluteY="225dp"
+        android:layout_above="@+id/nameOfCategoryText"
+        android:layout_alignLeft="@+id/spinner"
+        android:layout_alignStart="@+id/spinner" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/addCategoryButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/imageView3"
         android:layout_marginBottom="101dp"
         android:layout_marginLeft="13dp"
         android:layout_marginStart="13dp"
-        android:onClick="createClassification"
-        android:text="Add"
-        tools:layout_editor_absoluteX="254dp"
-        tools:layout_editor_absoluteY="274dp"
-        android:layout_above="@+id/imageView3"
+        android:layout_toEndOf="@+id/classificationText"
         android:layout_toRightOf="@+id/classificationText"
-        android:layout_toEndOf="@+id/classificationText" />
+        android:onClick="createClassification"
+        android:text="@string/add"
+        tools:layout_editor_absoluteX="254dp"
+        tools:layout_editor_absoluteY="274dp" />
 
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/questionText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_column="0"
-        android:layout_marginTop="14dp"
-        android:layout_row="3"
-        android:text="What are you doing ?"
+        android:text="@string/what_are_you_doing"
         android:textSize="24sp"
         tools:layout_editor_absoluteX="20dp"
         tools:layout_editor_absoluteY="22dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="settingsActivity"
-        android:text="Settings"
-        tools:layout_editor_absoluteX="13dp"
-        tools:layout_editor_absoluteY="447dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="12dp"
-        android:layout_marginEnd="12dp" />
-
-    <AutoCompleteTextView
-        android:id="@+id/svar"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:layout_marginTop="11dp"
-        android:layout_below="@+id/textView7"
+        android:layout_below="@+id/toolbar"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/button4"
-        android:layout_alignEnd="@+id/button4" />
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="12dp" />
+
+    <Button
+        android:id="@+id/settingsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="12dp"
+        android:layout_marginRight="12dp"
+        android:onClick="settingsActivity"
+        android:text="@string/settings_activity_name"
+        tools:layout_editor_absoluteX="13dp"
+        tools:layout_editor_absoluteY="447dp" />
+
+    <AutoCompleteTextView
+        android:id="@+id/actionText"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:ems="10"
+        android:inputType="text"
+        android:layout_below="@+id/questionText"
+        android:layout_alignLeft="@+id/chooseCategoryText"
+        android:layout_alignStart="@+id/chooseCategoryText" />
 
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:layout_above="@+id/button3"
+        android:layout_above="@+id/history_button"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:contentDescription="Horizontal separator"
         app:srcCompat="@android:color/black" />
 
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        app:srcCompat="@android:color/black"
-        android:layout_above="@+id/textView4"
+        android:layout_above="@+id/createNewCategoryText"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="32dp" />
+        android:layout_marginBottom="32dp"
+        android:contentDescription="Horizontal sepator"
+        app:srcCompat="@android:color/black" />
 
 
 </RelativeLayout>

@@ -1,10 +1,13 @@
 package software.unf.dk.timetracker;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,31 +20,41 @@ import android.widget.ToggleButton;
 import static software.unf.dk.timetracker.MainActivity.setNotificationTime;
 
 
-public class CustomSettings extends Activity {
+public class SettingsActivity extends AppCompatActivity {
     private Spinner spinner;
     private EditText classificationEntry;
     private String classificationName;
     private String newName;
     private ToggleButton toggle;
-    private EditText notificationtimetext;
+    private EditText notificationTimeText;
 
-    private static String[] spinnerStrings;
+    private String[] spinnerStrings;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.customsettings);
+        setContentView(R.layout.activity_settings);
         layoutSetup();
         setToggle();
     }
 
     private void layoutSetup() {
+        // Toolbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.settings_toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar ab = getSupportActionBar();
+        if (ab != null) {
+            ab.setDisplayHomeAsUpEnabled(true);
+        } else {
+            Log.w("timetracker", "Warning: Failed to get action bar!");
+        }
+
         // Dropdown.
-        spinner = findViewById(R.id.spinner);
-        classificationEntry = findViewById(R.id.classificationText);
+        spinner = (Spinner) findViewById(R.id.spinner);
+        classificationEntry = (EditText) findViewById(R.id.classificationText);
         toggle = (ToggleButton) findViewById(R.id.toggleButton);
-        notificationtimetext = (EditText) findViewById(R.id.notificationtimetext);
+        notificationTimeText = (EditText) findViewById(R.id.notificationTimeText);
 
         setSpinner();
     }
@@ -86,7 +99,8 @@ public class CustomSettings extends Activity {
     }
 
     public void remove(View view){
-        Classification.getClassificationByName(classificationName).setVisible(false);
+        Classification c = Classification.getClassificationByName(classificationName);
+        if (c != null) c.setVisible(false);
         setSpinner();
     }
 
@@ -116,7 +130,7 @@ public class CustomSettings extends Activity {
                 }
                 dialog.dismiss();
                 Classification c = Classification.getClassificationByName(classificationName);
-                c.setName(newName);
+                if (c != null) c.setName(newName);
                 setSpinner();
             }
         });
@@ -144,8 +158,8 @@ public class CustomSettings extends Activity {
     public void updateNotificationTime(View view) {
         int time;
         try {
-            time = Integer.parseInt(notificationtimetext.getText().toString());
-            notificationtimetext.setText("");
+            time = Integer.parseInt(notificationTimeText.getText().toString());
+            notificationTimeText.setText("");
         } catch (Exception e) {
             Toast.makeText(this, "Please enter a number", Toast.LENGTH_LONG);
             return;
