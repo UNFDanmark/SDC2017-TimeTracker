@@ -12,7 +12,7 @@ class Classification {
 
     // Non-statics.
     private String name;
-    private int id;
+    private final int id;
     private boolean visible = true;
 
     public Classification(String name, int id, boolean visible) {
@@ -50,10 +50,11 @@ class Classification {
         if (id == -1) {
             Log.e("Classification", "Failed to make new category");
             return false;
+        } else {
+            Classification c = new Classification(name, id, true);
+            Classification.classificationMap.put(id, c);
+            return true;
         }
-        Classification c = new Classification(name, id, true);
-        Classification.classificationMap.put(id, c);
-        return true;
     }
     static int getUniqueId() {
         for (int i = 0; i < Integer.MAX_VALUE; i++) {

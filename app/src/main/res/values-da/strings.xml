@@ -10,4 +10,8 @@
     <string name="add">Tilføj</string>
     <string name="rename">Omdøb</string>
     <string name="remove">Fjern</string>
+    <string name="minutes_to_notification">Minutter til næste notifikation</string>
+    <string name="notifications_on_off">Notifikationer til/fra</string>
+    <string name="set">Indstil</string>
+    <string name="name">Navn</string>
 </resources>

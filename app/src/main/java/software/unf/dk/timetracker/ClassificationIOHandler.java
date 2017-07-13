@@ -9,12 +9,12 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
@@ -32,6 +32,8 @@ import javax.xml.transform.stream.StreamResult;
  */
 
 class ClassificationIOHandler extends IOHandler {
+    private DocumentBuilder builder;
+    private Document document;
     ClassificationIOHandler(File file) {
         super(file);
         final String DOCUMENT_HEADER = "<?xml version=\"1.0\"?>\n<classifications>\n" +
@@ -49,7 +51,7 @@ class ClassificationIOHandler extends IOHandler {
                 writer.close();
             }
             // Initialise parser objects
-            factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             builder = factory.newDocumentBuilder();
             // Parse file
             document = builder.parse(file);

@@ -17,6 +17,7 @@ class Action {
 
     private String name;
     private Classification classification;
+    // TODO: implement date/time modification frontend
     private Date date;
     private String description;
 

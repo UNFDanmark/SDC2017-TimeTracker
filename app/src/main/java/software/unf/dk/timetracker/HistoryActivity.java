@@ -52,7 +52,7 @@ public class HistoryActivity extends AppCompatActivity {
      */
     private String currShownDate;
 
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM yyyy", Locale.ENGLISH);
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM yyyy", Locale.ENGLISH);
 
 
 
@@ -176,6 +176,7 @@ public class HistoryActivity extends AppCompatActivity {
         showDate = (TextView) findViewById(R.id.showDate);
     }
 
+    // TODO: implements extent spinner
     private Action[] setValues(WhatToShow whatToShow, String date){
         ArrayList<Action> values = new ArrayList<>();
 
@@ -214,7 +215,7 @@ public class HistoryActivity extends AppCompatActivity {
         return result;
     }
 
-    private ArrayList<Action> getDayData(String date){
+    private ArrayList<Action> getDayData(String date) {
         ArrayList<Action> result = new ArrayList<>();
         DateFormat dateFormat = new SimpleDateFormat("dd/MM yyyy", Locale.ENGLISH);
 
@@ -240,7 +241,7 @@ public class HistoryActivity extends AppCompatActivity {
         return new ArrayList<>();
     }*/
 
-    private ArrayList<Action> getMonthData(String month){
+    private ArrayList<Action> getMonthData(String month) {
         ArrayList<Action> result = new ArrayList<>();
         DateFormat dateFormat = new SimpleDateFormat("MM yyyy", Locale.ENGLISH);
 
@@ -256,7 +257,7 @@ public class HistoryActivity extends AppCompatActivity {
     }
 
 
-    private ArrayList<Action> getYearData(String year){
+    private ArrayList<Action> getYearData(String year) {
         ArrayList<Action> result = new ArrayList<>();
         DateFormat dateFormat = new SimpleDateFormat("yyyy", Locale.ENGLISH);
 
@@ -274,13 +275,12 @@ public class HistoryActivity extends AppCompatActivity {
     /*
      * For Button Input.
      */
-    public void oneExtraDay(View view){
+    public void oneExtraDay(@Unused View view) {
         // Add a day to the current date displayed.
         Calendar c = Calendar.getInstance();
-        try{
+        try {
             c.setTime(dateFormat.parse(currShownDate));
-        }
-        catch (ParseException e){
+        } catch (ParseException e){
             return;
         }
 
@@ -289,7 +289,7 @@ public class HistoryActivity extends AppCompatActivity {
         // Update display.
         updateView();
     }
-    public void oneLessDay(View view){
+    public void oneLessDay(@Unused View view) {
         // Add a day to the current date displayed.
         Calendar c = Calendar.getInstance();
         try {
@@ -304,7 +304,7 @@ public class HistoryActivity extends AppCompatActivity {
         updateView();
     }
 
-    public void oneExtraMonth(View view){
+    public void oneExtraMonth(@Unused View view) {
         // Add a month to the current date displayed.
         Calendar c = Calendar.getInstance();
         try {
@@ -318,7 +318,7 @@ public class HistoryActivity extends AppCompatActivity {
         // Update display.
         updateView();
     }
-    public void oneLessMonth(View view){
+    public void oneLessMonth(@Unused View view) {
         // Add a day to the current date displayed.
         Calendar c = Calendar.getInstance();
         try{
@@ -334,7 +334,7 @@ public class HistoryActivity extends AppCompatActivity {
         updateView();
     }
 
-    public void setDateToday(View view){
+    public void setDateToday(@Unused View view) {
         currShownDate = dateFormat.format(new Date());
         updateView();
     }

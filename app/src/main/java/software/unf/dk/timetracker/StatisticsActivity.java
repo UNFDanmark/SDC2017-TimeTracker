@@ -74,9 +74,9 @@ public class StatisticsActivity extends AppCompatActivity {
         spinner = (Spinner)findViewById(R.id.categoryChooser);
     }
 
-    void updateView() {
+    private void updateView() {
         ArrayList<String> valuesToRead = new ArrayList<>();
-        valuesToRead.add("catagory");
+        valuesToRead.add("category");
 
         // Find the values to read.
         for (Action a : Action.actionList) {
@@ -140,7 +140,7 @@ class StatisticsArrayAdapter extends ArrayAdapter<String> {
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         String name = values[position];
 
-        if(name.equals("catagory")){
+        if(name.equals("category")){
             // If it is the first line, make a pieChart.
 
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -230,20 +230,20 @@ class StatisticsArrayAdapter extends ArrayAdapter<String> {
 
     // If there is a reference to a chart, this will set all the values.
     private void makePieChart(String title, ArrayList<String> names, ArrayList<Integer> amounts, PieChart pieChart) {
-        int[] colors = new int[] { R.color.neonpink,
+        int[] colors = new int[] { R.color.neonPink,
                 R.color.green,
                 R.color.blue,
-                R.color.lightgreen,
+                R.color.lightGreen,
                 R.color.red,
                 R.color.yellow,
-                R.color.lightblue,
-                R.color.magenza,
+                R.color.lightBlue,
+                R.color.magenta,
                 R.color.orange,
-                R.color.turqoise,
+                R.color.turquoise,
                 R.color.pumpkin,
-                R.color.palepink,
-                R.color.svump,
-                R.color.darkpurple
+                R.color.palePink,
+                R.color.swamp,
+                R.color.darkPurple
         };
         PieDataSet dataSet = new PieDataSet(Charts.createEntries(names, amounts), title);
         dataSet.setColors(colors, context);

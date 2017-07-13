@@ -155,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
         setSpinner();
     }
 
-    void setCompletion() {
+    private void setCompletion() {
         String[] actionNames = Action.getNames().toArray(new String[0]);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, actionNames);
         actionText.setAdapter(adapter);
@@ -189,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Runs when Enter is pressed
-    public void enter(View view){
+    public void enter() {
         // Creates new instance of an action and adds it to the list of actions.
         String name = actionText.getText().toString();
         if (name.equals("")) {
@@ -204,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
         Action.actionList.add(new Action(name, classification, date));
     }
 
-    public void createClassification(View view){
+    public void createClassification(View view) {
         String name = classificationText.getText().toString();
 
         //Safety checks
@@ -230,25 +230,23 @@ public class MainActivity extends AppCompatActivity {
         classificationText.setText("");
     }
 
-    public void historyActivity(View view){
-        Intent hisintent = new Intent(this, HistoryActivity.class);
-        startActivity(hisintent);
+    private void historyActivity(@Unused View view) {
+        startActivity(new Intent(this, StatisticsActivity.class));
     }
 
-    public void settingsActivity(View view){
-        Intent hissettingpath = new Intent(this, SettingsActivity.class);
-        startActivity(hissettingpath);
+    private void settingsActivity(@Unused View view) {
+        startActivity(new Intent(this, StatisticsActivity.class));
     }
 
-    public void statisticsActivity(View view){
-        Intent hisppath = new Intent(this, StatisticsActivity.class);
-        startActivity(hisppath);
+    private void statisticsActivity(@Unused View view) {
+        startActivity(new Intent(this, StatisticsActivity.class));
     }
 
-    public void createNotification (){
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this).setSmallIcon(R.drawable.ic_stat_name)
-                .setContentTitle("TimeTracker")
-                .setContentText("What are you doing?");
+    private void createNotification () {
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.drawable.ic_stat_name)
+                .setContentTitle(getString(R.string.app_name))
+                .setContentText(getString(R.string.what_are_you_doing));
         // Creates an explicit intent for an Activity in your app
         Intent resultIntent = new Intent(this, MainActivity.class);
 

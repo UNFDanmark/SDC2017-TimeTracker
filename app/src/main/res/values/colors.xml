@@ -3,19 +3,19 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#5600FF</color>
     <color name="colorAccent">#f57f17</color>
-    <color name="darkpurple">#5600FF</color>
-    <color name="neonpink">#FF00A9</color>
-    <color name="lightgreen">#A9FF00</color>
+    <color name="darkPurple">#5600FF</color>
+    <color name="neonPink">#FF00A9</color>
+    <color name="lightGreen">#A9FF00</color>
     <color name="green">#2fff00</color>
     <color name="blue">#039be5</color>
     <color name="yellow">#ffc107</color>
     <color name= "red">#d50000</color>
-    <color name="lightblue">#26c6da</color>
+    <color name="lightBlue">#26c6da</color>
     <color name="orange">#ff6f00</color>
-    <color name="magenza">#ad1457</color>
-    <color name="turqoise">#18ffff</color>
+    <color name="magenta">#ad1457</color>
+    <color name="turquoise">#18ffff</color>
     <color name="pumpkin">#ff5722</color>
     <color name="purple">#673ab7</color>
-    <color name="palepink">#f06292</color>
-    <color name="svump">#43a047</color>
+    <color name="palePink">#f06292</color>
+    <color name="swamp">#43a047</color>
 </resources>

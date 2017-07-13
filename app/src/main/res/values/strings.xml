@@ -1,5 +1,4 @@
 <resources>
-    <string name="package_id" translatable="false">dk.unf.software.timetracker</string>
     <string name="app_name" translatable="false">TimeTracker</string>
     <string name="history_activity_name" translatable="true">History</string>
     <string name="settings_activity_name" translatable="true">Settings</string>
@@ -11,4 +10,8 @@
     <string name="add">Add</string>
     <string name="rename">Rename</string>
     <string name="remove">Remove</string>
+    <string name="minutes_to_notification">Minutes to next notification</string>
+    <string name="notifications_on_off">Notifications on/off</string>
+    <string name="set">Set</string>
+    <string name="name">Name</string>
 </resources>

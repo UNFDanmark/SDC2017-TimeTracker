@@ -13,7 +13,7 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Charts {
+class Charts {
 
 
     /**
@@ -23,7 +23,7 @@ public class Charts {
 
      // If there is a reference to a chart, this will set all the values.
      private void makePieChart(String title, ArrayList<String> names, ArrayList<Integer> amounts, PieChart pieChart) {
-         int[] colors = new int[] { R.color.neonpink, R.color.green, R.color.blue, R.color.lightgreen, R.color.red, R.color.yellow, R.color.lightblue, R.color.magenza, R.color.orange, R.color.turqoise, R.color.pumpkin, R.color.palepink, R.color.svump, R.color.darkpurple }, getApplicationContext;
+         int[] colors = new int[] { R.color.neonPink, R.color.green, R.color.blue, R.color.lightGreen, R.color.red, R.color.yellow, R.color.lightBlue, R.color.magenta, R.color.orange, R.color.turquoise, R.color.pumpkin, R.color.palePink, R.color.swamp, R.color.darkPurple }, getApplicationContext;
          PieDataSet dataSet = new PieDataSet(Charts.createEntries(names, amounts), title);
          dataSet.setColors(colors, this);
          PieData data = new PieData(dataSet);
@@ -33,7 +33,7 @@ public class Charts {
 
      *
      */
-    public static List<PieEntry> createEntries(ArrayList<String> names, ArrayList<Integer> amounts) {
+    static List<PieEntry> createEntries(ArrayList<String> names, ArrayList<Integer> amounts) {
         List<PieEntry> result = new ArrayList<>();
         if(amounts.size() != names.size()) {
             throw new IllegalArgumentException("List of either amounts or names is not equal to each other and can there fore not be handled");
@@ -57,7 +57,7 @@ public class Charts {
     }
 
     // Assigns the labels for the x-axis.
-    static XAxis getXAxisData(String[] names, LineChart lineChart){
+    static void getXAxisData(String[] names, LineChart lineChart){
         // the labels that should be drawn on the XAxis
         final String[] labels = names;
 
@@ -76,7 +76,7 @@ public class Charts {
         xAxis.setGranularity(1f); // minimum axis-step (interval) is 1
         xAxis.setValueFormatter(formatter);
 
-        return xAxis;
+        //return xAxis;
     }
 
     // Formats the list of column values to a list of Entries, with the createLineData can use.

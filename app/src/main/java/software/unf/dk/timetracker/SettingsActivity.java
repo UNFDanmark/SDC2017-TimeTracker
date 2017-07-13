@@ -85,7 +85,7 @@ public class SettingsActivity extends AppCompatActivity {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
-    public void adding(View view){
+    public void adding(@Unused View view) {
         String name = classificationEntry.getText().toString();
 
         if (!Classification.createNew(name)) {
@@ -98,13 +98,13 @@ public class SettingsActivity extends AppCompatActivity {
         classificationEntry.setText("");
     }
 
-    public void remove(View view){
+    public void remove(@Unused View view) {
         Classification c = Classification.getClassificationByName(classificationName);
         if (c != null) c.setVisible(false);
         setSpinner();
     }
 
-    public void rename(View view){
+    public void rename(@Unused View view) {
         // Build dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Enter new category name");
@@ -142,7 +142,7 @@ public class SettingsActivity extends AppCompatActivity {
         });
         builder.show();
     }
-    public void setToggle() {
+    private void setToggle() {
         toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
@@ -155,17 +155,15 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
 
-    public void updateNotificationTime(View view) {
+    public void updateNotificationTime(@Unused View view) {
         int time;
         try {
             time = Integer.parseInt(notificationTimeText.getText().toString());
             notificationTimeText.setText("");
         } catch (Exception e) {
-            Toast.makeText(this, "Please enter a number", Toast.LENGTH_LONG);
+            showToast("Please enter a number");
             return;
         }
         setNotificationTime(time);
     }
-
-
 }

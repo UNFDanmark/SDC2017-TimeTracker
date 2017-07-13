@@ -111,7 +111,7 @@
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Minutes to next notification"
+        android:text="@string/minutes_to_notification"
         android:layout_above="@+id/notificationTimeText"
         android:layout_alignLeft="@+id/notificationTimeText"
         android:layout_alignStart="@+id/notificationTimeText" />
@@ -123,7 +123,7 @@
         android:layout_alignLeft="@+id/toggleButton"
         android:layout_alignStart="@+id/toggleButton"
         android:layout_below="@+id/removeButton"
-        android:text="Notifications On/Off" />
+        android:text="@string/notifications_on_off" />
 
     <Button
         android:id="@+id/button5"
@@ -133,6 +133,6 @@
         android:layout_alignStart="@+id/toggleButton"
         android:layout_alignTop="@+id/notificationTimeText"
         android:onClick="updateNotificationTime"
-        android:text="Enter" />
+        android:text="@string/set" />
 
 </RelativeLayout>
