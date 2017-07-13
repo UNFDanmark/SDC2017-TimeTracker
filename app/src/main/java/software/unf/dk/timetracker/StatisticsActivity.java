@@ -1,11 +1,12 @@
 package software.unf.dk.timetracker;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
@@ -29,7 +31,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class StatisticsActivity extends Activity {
+public class StatisticsActivity extends AppCompatActivity {
 
     private ListView statListView;
 
@@ -52,40 +54,44 @@ public class StatisticsActivity extends Activity {
     }
 
     private void layoutSetup() {
+        // Toolbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.statistics_toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar ab = getSupportActionBar();
+        if (ab != null) {
+            ab.setDisplayHomeAsUpEnabled(true);
+        } else {
+            Log.w("timetracker", "Warning: Failed to get action bar!");
+        }
+
         setReferences();
-
-        // Spinner.
-        spinner = (Spinner)findViewById(R.id.catagoryChooser);
-
         updateView();
     }
 
     private void setReferences(){
         // List.
-        statListView = findViewById(R.id.underCategoryList);
+        statListView = (ListView) findViewById(R.id.underCategoryList);
+        spinner = (Spinner)findViewById(R.id.categoryChooser);
     }
 
-    void updateView(){
+    private void updateView() {
         ArrayList<String> valuesToRead = new ArrayList<>();
-        valuesToRead.add("catagory");
+        valuesToRead.add("category");
 
         // Find the values to read.
         for (Action a : Action.actionList) {
-            Log.e("Test", "Name of catagory: " +a.getClassification().getName() + " and looking for: " + classificationString);
-            if(a.getClassification().getName().equals(classificationString)){
+            if (a.getClassification().getName().equals(classificationString)) {
                 // The one we are looking for.
                 // Do we already have it?
-                if(valuesToRead.contains(a.getName()))
+                if (valuesToRead.contains(a.getName()))
                     continue;
 
                 valuesToRead.add(a.getName());
-                Log.e("Test", "Used action: " + a.getName());
             }
         }
 
         // Convert the list back to an array.
         String[] valuesToSend = valuesToRead.toArray(new String[0]);
-        Log.e("Test", "" + valuesToSend.length);
         ArrayAdapter<String> adapter = new StatisticsArrayAdapter(this, valuesToSend, classificationString);
         statListView.setAdapter(adapter);
     }
@@ -123,7 +129,7 @@ class StatisticsArrayAdapter extends ArrayAdapter<String> {
     private final String[] values;
     private final String category;
 
-    public StatisticsArrayAdapter(Context context, String[] values, String category) {
+    StatisticsArrayAdapter(Context context, String[] values, String category) {
         super(context, -1, values);
         this.context = context;
         this.values = values;
@@ -134,13 +140,13 @@ class StatisticsArrayAdapter extends ArrayAdapter<String> {
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         String name = values[position];
 
-        if(name.equals("catagory")){
+        if(name.equals("category")){
             // If it is the first line, make a pieChart.
 
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.activity_statistics_pie_row, parent, false);
-            TextView nameText = (TextView) convertView.findViewById(R.id.nameOfPieChart);
-            PieChart chart = (PieChart) convertView.findViewById(R.id.chart);
+            convertView = inflater.inflate(R.layout.row_statistics_pie, parent, false);
+            TextView nameText = convertView.findViewById(R.id.nameOfPieChart);
+            PieChart chart = convertView.findViewById(R.id.chart);
 
             nameText.setText(category);
 
@@ -168,9 +174,9 @@ class StatisticsArrayAdapter extends ArrayAdapter<String> {
         }
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        convertView = inflater.inflate(R.layout.activity_statistics_row, parent, false);
-        TextView nameText = (TextView) convertView.findViewById(R.id.nameOfChart);
-        LineChart chart = (LineChart) convertView.findViewById(R.id.chart);
+        convertView = inflater.inflate(R.layout.row_statistics, parent, false);
+        TextView nameText = convertView.findViewById(R.id.nameOfChart);
+        LineChart chart = convertView.findViewById(R.id.chart);
 
         nameText.setText(name);
 
@@ -180,7 +186,7 @@ class StatisticsArrayAdapter extends ArrayAdapter<String> {
 
         ArrayList<Integer> amounts = new ArrayList<>();
         String date = dateFormat.format(new Date());
-        int amount = 0;
+        int amount;
         for (int i = 0; i < 7; i++) {
             amount = 0;
             for (Action a : Action.getAllWithName(name)) {
@@ -195,7 +201,8 @@ class StatisticsArrayAdapter extends ArrayAdapter<String> {
             try {
                 c.setTime(dateFormat.parse(date));
             } catch (ParseException e) {
-
+                Toast.makeText(context, "Failed to generate statistics list!", Toast.LENGTH_LONG).show();
+                return convertView;
             }
             c.add(Calendar.DATE, -1);  // number of days to add
             date = dateFormat.format(c.getTime());  // currShownDate is now the new date
@@ -223,7 +230,21 @@ class StatisticsArrayAdapter extends ArrayAdapter<String> {
 
     // If there is a reference to a chart, this will set all the values.
     private void makePieChart(String title, ArrayList<String> names, ArrayList<Integer> amounts, PieChart pieChart) {
-        int[] colors = new int[] { R.color.neonpink, R.color.green, R.color.blue, R.color.lightgreen, R.color.red, R.color.yellow, R.color.lightblue, R.color.magenza, R.color.orange, R.color.turqoise, R.color.pumpkin, R.color.palepink, R.color.svump, R.color.darkpurple }, getApplicationContext;
+        int[] colors = new int[] { R.color.neonPink,
+                R.color.green,
+                R.color.blue,
+                R.color.lightGreen,
+                R.color.red,
+                R.color.yellow,
+                R.color.lightBlue,
+                R.color.magenta,
+                R.color.orange,
+                R.color.turquoise,
+                R.color.pumpkin,
+                R.color.palePink,
+                R.color.swamp,
+                R.color.darkPurple
+        };
         PieDataSet dataSet = new PieDataSet(Charts.createEntries(names, amounts), title);
         dataSet.setColors(colors, context);
         PieData data = new PieData(dataSet);

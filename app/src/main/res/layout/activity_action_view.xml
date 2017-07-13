@@ -13,8 +13,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:selectAllOnFocus="false"
-        android:text="Name" />
+        android:selectAllOnFocus="false" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,8 +24,7 @@
         <TextView
             android:layout_width="220dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Category" />
+            android:layout_weight="1" />
 
         <Spinner
             android:id="@+id/classificationSpinner"
@@ -45,16 +43,14 @@
         <TextView
             android:layout_width="220dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Time" />
+            android:layout_weight="1" />
 
         <TextView
             android:id="@+id/timeText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Timestring"
-            android:textAppearance="@android:style/TextAppearance.Material.Small" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
     </LinearLayout>
 
@@ -62,24 +58,15 @@
         android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Description" />
+        android:layout_marginTop="20dp" />
 
     <EditText
         android:id="@+id/descriptionText"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_marginTop="0dp"
         android:layout_weight="1"
         android:ems="10"
         android:inputType="textMultiLine" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:orientation="horizontal">
-
-    </LinearLayout>
 
 </LinearLayout>

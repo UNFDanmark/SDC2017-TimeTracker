@@ -9,13 +9,13 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
@@ -33,12 +33,13 @@ import javax.xml.transform.stream.StreamResult;
  */
 
 class ActionIOHandler extends IOHandler {
-
-    private final String DOCUMENT_HEADER = "<?xml version=\"1.0\"?>\n<actions>\n</actions>";
+    private DocumentBuilder builder;
+    private Document document;
 
     // Instantiates, anc create a fil.
-    public ActionIOHandler(File file) {
+    ActionIOHandler(File file) {
         super(file);
+        final String DOCUMENT_HEADER = "<?xml version=\"1.0\"?>\n<actions>\n</actions>";
         try {
             // Create file if it doesn't exist
             if (file.createNewFile() || file.length() == 0) {
@@ -47,11 +48,8 @@ class ActionIOHandler extends IOHandler {
                 writer.close();
             }
             // Initialise parser objects
-            factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             builder = factory.newDocumentBuilder();
-            // Create test string
-            ByteArrayInputStream input = new ByteArrayInputStream(DOCUMENT_HEADER.getBytes("UTF-8"));
-
             // Parse file
             document = builder.parse(file);
             // document = builder.parse(file);
@@ -71,7 +69,7 @@ class ActionIOHandler extends IOHandler {
      * Parses the file the IOHandler handles and returns an ArrayList with all the actions inside it
      * @return An ArrayList of the Actions in the XML file
      */
-    public ArrayList<Action> parseActions() {
+    ArrayList<Action> parseActions() {
         ArrayList<Action> actionList = new ArrayList<>();
         Log.e("Info", "File length is " + file.length());
         try {
@@ -80,7 +78,6 @@ class ActionIOHandler extends IOHandler {
             Element root = document.getDocumentElement();
             // Check proper root tag
             if ((!root.getTagName().equals("actions")) || root.getNodeType() != Node.ELEMENT_NODE) {
-                // TODO: actually handle syntax errors
                 throw new IOException();
             }
             // Get action nodes
@@ -124,7 +121,7 @@ class ActionIOHandler extends IOHandler {
      * Saves the specified ArrayList of Actions in the IOHandler's file
      * @param actionList ArrayList of Actions to be saved
      */
-    public void writeActions(ArrayList<Action> actionList) {
+    void writeActions(ArrayList<Action> actionList) {
         Document document = builder.newDocument();
 
         // Create root element
